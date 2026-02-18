@@ -8,20 +8,21 @@ from hospitals.models import Hospital, Department
 class CustomUser(AbstractUser):
     USER_STATUS = (
         (0, "user"),
-        (1, "admin"),
+        (1, "reception"),
         (2, "doctor"),
-        (3, "reception"),
+        (3, "admin"),
     )
     email = models.EmailField(unique=True)
     fullname = models.CharField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
     active = models.BooleanField(default=False)
-    status = models.IntegerField(choices=USER_STATUS, default=0)
+    status = models.IntegerField(choices=USER_STATUS, default=3)
     profile = models.ImageField(upload_to='profiles/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     username = models.CharField(max_length=150, unique=False, null=True, blank=True)
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     @property
     def is_user(self):

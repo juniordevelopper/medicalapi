@@ -155,16 +155,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-# JWT va Auth sozlamalari
-REST_AUTH = {
-    'USE_JWT': True,
-    'JWT_AUTH_COOKIE': 'my-app-auth',
-    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
-    'JWT_AUTH_HTTPONLY': False,  # Frontend tokenni o'qiy olishi uchun
-    'SESSION_LOGIN': False,
-    'USER_DETAILS_SERIALIZER': 'accounts.serializers.UserDetailSerializer', 
-}
-
 # Allauth (Email Verification) sozlamalari - YANGI FORMAT
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -174,7 +164,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'http://localhost:3000/login/?verified=true' # React URL
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = 'http://localhost:5173/login'
 
 # Email (Gmail SMTP)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -195,6 +185,18 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
 ]
 
+# Probelni olib tashlang
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+
+# Yoki kafolat uchun REST_AUTH ichiga ham qo'shib qo'ying:
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'my-app-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
+    'JWT_AUTH_HTTPONLY': False,
+    'SESSION_LOGIN': False,
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.UserDetailSerializer',
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer', # Shu yerda ham bo'lsin
 }
